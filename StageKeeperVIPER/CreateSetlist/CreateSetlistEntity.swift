@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+enum CreateSetlistError: Error {
+    case emptySetlistName
+    case invalidSetlistData
+}

@@ -9,7 +9,7 @@ import Foundation
 
 protocol CreateSongRouterProtocol {
     var entry: CreateSongViewController? { get }
-    static func createCreateSong(screen: CreateSongScreen) -> CreateSongRouterProtocol
+    static func createCreateSong(screen: CreateSongScreen?) -> CreateSongRouterProtocol
     func navigateBack()
     func navigate(to screen: CreateSongScreen, song: Song?)
 }
@@ -17,7 +17,7 @@ protocol CreateSongRouterProtocol {
 class CreateSongRouter: CreateSongRouterProtocol {
     var entry: CreateSongViewController?
 
-    static func createCreateSong(screen: CreateSongScreen) -> any CreateSongRouterProtocol {
+    static func createCreateSong(screen: CreateSongScreen? = nil) -> any CreateSongRouterProtocol {
         let router = CreateSongRouter()
         
         let view = CreateSongViewController(screen: screen)

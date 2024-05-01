@@ -9,16 +9,18 @@ import Foundation
 
 protocol CreateSetlistRouterProtocol {
     var entry: CreateSetlistViewController? { get }
-    static func createCreateSetlist() -> CreateSetlistRouterProtocol
+    static func createCreateSetlist(screen: CreateSetlistScreen?) -> CreateSetlistRouterProtocol
+    func navigateBack()
+    func navigate(to screen: CreateSetlistScreen, setlist: Setlist?)
 }
 
 class CreateSetlistRouter: CreateSetlistRouterProtocol {
     var entry: CreateSetlistViewController?
 
-    static func createCreateSetlist() -> any CreateSetlistRouterProtocol {
+    static func createCreateSetlist(screen: CreateSetlistScreen? = nil) -> any CreateSetlistRouterProtocol {
         let router = CreateSetlistRouter()
         
-        let view = CreateSetlistViewController()
+        let view = CreateSetlistViewController(screen: screen)
         let presenter = CreateSetlistPresenter()
         let interactor = CreateSetlistInteractor()
         
@@ -31,5 +33,17 @@ class CreateSetlistRouter: CreateSetlistRouterProtocol {
         
         router.entry = view
         return router
+    }
+    
+    func navigateBack() {
+        guard let viewController = self.entry else { return }
+        viewController.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    func navigate(to screen: CreateSetlistScreen, setlist: Setlist? = nil) {
+        guard let viewController = self.entry else { return }
+        let destinationVC = CreateSetlistViewController(screen: screen, setlist: setlist)
+        destinationVC.presenter = self.entry?.presenter
+        viewController.navigationController?.pushViewController(destinationVC, animated: true)
     }
 }

@@ -15,7 +15,7 @@ protocol CreateSongPresenterProtocol {
     func viewDidLoad()
     func createSong()
     func interactorDidCreateSong()
-    func goToSecondScreen()
+    func goToMainScreen()
 }
 
 class CreateSongPresenter: CreateSongPresenterProtocol {
@@ -48,7 +48,7 @@ class CreateSongPresenter: CreateSongPresenterProtocol {
         router?.navigateBack()
     }
     
-    func goToSecondScreen() {
+    func goToMainScreen() {
         guard let song = view?.getSongData() else {
             view?.displayError(.invalidSongData)
             return
@@ -59,6 +59,6 @@ class CreateSongPresenter: CreateSongPresenterProtocol {
             return
         }
         
-        router?.navigate(to: .second, song: song)
+        router?.navigate(to: .main, song: song)
     }
 }

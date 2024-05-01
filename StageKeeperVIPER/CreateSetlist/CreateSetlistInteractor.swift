@@ -9,8 +9,15 @@ import Foundation
 
 protocol CreateSetlistInteractorProtocol {
     var presenter: CreateSetlistPresenterProtocol? { get set }
+    
+    func createSetlist(setlist: Setlist)
 }
 
 class CreateSetlistInteractor: CreateSetlistInteractorProtocol {
     var presenter: CreateSetlistPresenterProtocol?
+    
+    func createSetlist(setlist: Setlist) {
+        print("\(setlist.name) created")
+        presenter?.interactorDidCreateSetlist()
+    }
 }

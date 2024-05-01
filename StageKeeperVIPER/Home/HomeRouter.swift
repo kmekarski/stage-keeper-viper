@@ -59,7 +59,7 @@ class HomeRouter: HomeRouterProtocol {
         viewController.navigationController?.pushViewController(createSetlistView, animated: true)    }
     
     func goToCreateSong() {
-        let createSongRouter = CreateSongRouter.createCreateSong(screen: .first)
+        let createSongRouter = CreateSongRouter.createCreateSong()
         guard let createSongView = createSongRouter.entry,
               let viewController = self.entry else { return }
         viewController.navigationController?.pushViewController(createSongView, animated: true)

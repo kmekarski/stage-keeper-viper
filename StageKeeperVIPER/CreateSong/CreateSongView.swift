@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 enum CreateSongScreen {
-    case first
-    case second
+    case setNameAndInstruments
+    case main
 }
 
 protocol CreateSongViewProtocol {
@@ -25,7 +25,7 @@ class CreateSongViewController: UIViewController, CreateSongViewProtocol {
     var screen: CreateSongScreen
     var song: Song?
     
-    private let createSongLabel: UILabel = {
+    private let headerLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Create song"
@@ -64,8 +64,8 @@ class CreateSongViewController: UIViewController, CreateSongViewProtocol {
         return button
     }()
     
-    init(screen: CreateSongScreen, song: Song? = nil) {
-        self.screen = screen
+    init(screen: CreateSongScreen? = nil, song: Song? = nil) {
+        self.screen = screen ?? .setNameAndInstruments
         self.song = song
         super.init(nibName: nil, bundle: nil)
     }
@@ -100,22 +100,22 @@ private extension CreateSongViewController {
         return 24
     }
     func configureUI() {
-        view.addSubview(createSongLabel)
+        view.addSubview(headerLabel)
         
         NSLayoutConstraint.activate([
-            createSongLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            createSongLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            headerLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            headerLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
         ])
         
         switch screen {
-        case .first:
-            configureFirstScreen()
-        case .second:
-            configureSecondScreen()
+        case .setNameAndInstruments:
+            configureSetNameAndInstrumentsScreen()
+        case .main:
+            configureMainScreen()
         }
     }
     
-    func configureFirstScreen() {
+    func configureSetNameAndInstrumentsScreen() {
         view.addSubview(nameTextField)
         view.addSubview(nextButton)
         
@@ -123,7 +123,7 @@ private extension CreateSongViewController {
         createButton.isHidden = true
         
         NSLayoutConstraint.activate([
-            nameTextField.topAnchor.constraint(equalTo: createSongLabel.bottomAnchor, constant: 48),
+            nameTextField.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: 48),
             nameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
             nameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
             nameTextField.heightAnchor.constraint(equalToConstant: 48),
@@ -135,7 +135,7 @@ private extension CreateSongViewController {
         ])
     }
     
-    func configureSecondScreen() {
+    func configureMainScreen() {
         view.addSubview(createButton)
         view.addSubview(nameLabel)
         
@@ -145,7 +145,7 @@ private extension CreateSongViewController {
         nameLabel.text = song?.name ?? ""
         
         NSLayoutConstraint.activate([
-            nameLabel.topAnchor.constraint(equalTo: createSongLabel.bottomAnchor, constant: 48),
+            nameLabel.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: 48),
             nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
             nameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
             nameLabel.heightAnchor.constraint(equalToConstant: 48),
@@ -159,7 +159,7 @@ private extension CreateSongViewController {
     
     @objc
     func nextButtonPressed() {
-        presenter?.goToSecondScreen()
+        presenter?.goToMainScreen()
     }
     
     @objc
@@ -169,5 +169,9 @@ private extension CreateSongViewController {
 }
 
 #Preview {
-    CreateSongViewController(screen: .first)
+    let createSongRouter = CreateSongRouter.createCreateSong(screen: .setNameAndInstruments)
+    let createSongView = createSongRouter.entry!
+    let navigation = UINavigationController()
+    navigation.viewControllers = [createSongView]
+    return navigation
 }
