@@ -17,6 +17,8 @@ protocol HomePresenterProtocol {
     func interactorDidFetchSongs(with result: Result<[Song], Error>)
     func setlistTapped(setlist: Setlist)
     func songTapped(song: Song)
+    func createSetlistTapped()
+    func createSongTapped()
 }
 
 class HomePresenter: HomePresenterProtocol {
@@ -29,6 +31,7 @@ class HomePresenter: HomePresenterProtocol {
     
     func viewDidLoad() {
         interactor?.fetchSetlists()
+        interactor?.fetchSongs()
     }
     
     func interactorDidFetchSetlists(with result: Result<[Setlist], any Error>) {
@@ -55,5 +58,13 @@ class HomePresenter: HomePresenterProtocol {
     
     func songTapped(song: Song) {
         router?.goToSongDetail(song)
+    }
+    
+    func createSetlistTapped() {
+        router?.goToCreateSetlist()
+    }
+    
+    func createSongTapped() {
+        router?.goToCreateSong()
     }
 }

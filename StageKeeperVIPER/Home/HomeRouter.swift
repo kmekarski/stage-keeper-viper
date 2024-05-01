@@ -13,6 +13,8 @@ protocol HomeRouterProtocol {
     static func start() -> HomeRouterProtocol
     func goToSetlistDetail(_ setlist: Setlist)
     func goToSongDetail(_ song: Song)
+    func goToCreateSetlist()
+    func goToCreateSong()
 }
 
 class HomeRouter: HomeRouterProtocol {
@@ -21,9 +23,9 @@ class HomeRouter: HomeRouterProtocol {
     static func start() -> any HomeRouterProtocol {
         let router = HomeRouter()
         
-        var view = HomeViewController()
-        var interactor = HomeInteractor()
-        var presenter = HomePresenter()
+        let view = HomeViewController()
+        let interactor = HomeInteractor()
+        let presenter = HomePresenter()
         
         presenter.view = view
         presenter.interactor = interactor
@@ -37,11 +39,30 @@ class HomeRouter: HomeRouterProtocol {
     }
     
     func goToSetlistDetail(_ setlist: Setlist) {
-        print("going to \(setlist.name) details")
+        let setlistDetailsRouter = SetlistDetailsRouter.createSetlistDetails(with: setlist)
+        guard let setlistDetailsView = setlistDetailsRouter.entry,
+              let viewController = self.entry else { return }
+        viewController.navigationController?.pushViewController(setlistDetailsView, animated: true)
     }
     
     func goToSongDetail(_ song: Song) {
-        print("going to \(song.name) details")
+        let songDetailsRouter = SongDetailsRouter.createSongDetails(with: song)
+        guard let songDetailsView = songDetailsRouter.entry,
+              let viewController = self.entry else { return }
+        viewController.navigationController?.pushViewController(songDetailsView, animated: true)
+    }
+    
+    func goToCreateSetlist() {
+        let createSetlistRouter = CreateSetlistRouter.createCreateSetlist()
+        guard let createSetlistView = createSetlistRouter.entry,
+              let viewController = self.entry else { return }
+        viewController.navigationController?.pushViewController(createSetlistView, animated: true)    }
+    
+    func goToCreateSong() {
+        let createSongRouter = CreateSongRouter.createCreateSong(screen: .first)
+        guard let createSongView = createSongRouter.entry,
+              let viewController = self.entry else { return }
+        viewController.navigationController?.pushViewController(createSongView, animated: true)
     }
     
 }

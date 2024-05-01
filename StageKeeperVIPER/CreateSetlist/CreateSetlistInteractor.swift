@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+protocol CreateSetlistInteractorProtocol {
+    var presenter: CreateSetlistPresenterProtocol? { get set }
+}
+
+class CreateSetlistInteractor: CreateSetlistInteractorProtocol {
+    var presenter: CreateSetlistPresenterProtocol?
+}
