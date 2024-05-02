@@ -53,16 +53,30 @@ class HomeRouter: HomeRouterProtocol {
     }
     
     func goToCreateSetlist() {
-        let createSetlistRouter = CreateSetlistRouter.createCreateSetlist()
+        var createSetlistRouter = CreateSetlistRouter.createCreateSetlist()
+        createSetlistRouter.delegate = self
         guard let createSetlistView = createSetlistRouter.entry,
               let viewController = self.entry else { return }
         viewController.navigationController?.pushViewController(createSetlistView, animated: true)    }
     
     func goToCreateSong() {
-        let createSongRouter = CreateSongRouter.createCreateSong()
+        var createSongRouter = CreateSongRouter.createCreateSong()
+        createSongRouter.delegate = self
         guard let createSongView = createSongRouter.entry,
               let viewController = self.entry else { return }
         viewController.navigationController?.pushViewController(createSongView, animated: true)
     }
-    
+}
+
+extension HomeRouter: CreateSetlistRouterDelegate {
+    func didCreateSetlist(setlist: Setlist) {
+        entry?.didCreateSetlist(setlist: setlist)
+    }
+}
+
+
+extension HomeRouter: CreateSongRouterDelegate {
+    func didCreateSong(song: Song) {
+        entry?.didCreateSong(song: song)
+    }
 }

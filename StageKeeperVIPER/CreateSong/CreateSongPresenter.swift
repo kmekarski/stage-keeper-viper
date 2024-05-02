@@ -14,7 +14,7 @@ protocol CreateSongPresenterProtocol {
     
     func viewDidLoad()
     func createSong()
-    func interactorDidCreateSong()
+    func interactorDidCreateSong(song: Song)
     func goToMainScreen()
 }
 
@@ -44,7 +44,8 @@ class CreateSongPresenter: CreateSongPresenterProtocol {
         interactor?.createSong(song: song)
     }
     
-    func interactorDidCreateSong() {
+    func interactorDidCreateSong(song: Song) {
+        router?.notifyDelegateAboutCreatingSong(song: song)
         router?.navigateBack()
     }
     

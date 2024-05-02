@@ -18,11 +18,14 @@ protocol HomeViewProtocol {
     
     func updateSetlists(with setlists: [Setlist])
     func updateSongs(with songs: [Song])
+    func didCreateSetlist(setlist: Setlist)
+    func didCreateSong(song: Song)
     func updateSetlistsError(with errorMessage: String)
     func updateSongsError(with errorMessage: String)
 }
 
 class HomeViewController: UIViewController, HomeViewProtocol {
+    
     var presenter: HomePresenterProtocol?
     
     var setlists: [Setlist] = []
@@ -93,6 +96,16 @@ class HomeViewController: UIViewController, HomeViewProtocol {
             self.songs = songs
             self.songsTable.reloadData()
         }
+    }
+    
+    func didCreateSetlist(setlist: Setlist) {
+        setlists.append(setlist)
+        setlistsTable.reloadData()
+    }
+    
+    func didCreateSong(song: Song) {
+        songs.append(song)
+        songsTable.reloadData()
     }
     
     func updateSetlistsError(with errorMessage: String) {

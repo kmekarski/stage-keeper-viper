@@ -18,6 +18,7 @@ class CreateSongInteractor: CreateSongInteractorProtocol {
     
     func createSong(song: Song) {
         print("\(song.name) created")
-        presenter?.interactorDidCreateSong()
+        mockSongs.append(song)
+        presenter?.interactorDidCreateSong(song: song)
     }
 }

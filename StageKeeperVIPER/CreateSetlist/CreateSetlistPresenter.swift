@@ -14,7 +14,7 @@ protocol CreateSetlistPresenterProtocol {
     
     func viewDidLoad()
     func createSetlist()
-    func interactorDidCreateSetlist()
+    func interactorDidCreateSetlist(setlist: Setlist)
     func goToNextScreen(currentScreen: CreateSetlistScreen)
     func goToAddSongsScreen()
     func goToEditSongsScreen()
@@ -46,7 +46,8 @@ class CreateSetlistPresenter: CreateSetlistPresenterProtocol {
         interactor?.createSetlist(setlist: setlist)
     }
     
-    func interactorDidCreateSetlist() {
+    func interactorDidCreateSetlist(setlist: Setlist) {
+        router?.notifyDelegateAboutCreatingSetlist(setlist: setlist)
         router?.navigateBack()
     }
     

@@ -18,6 +18,7 @@ class CreateSetlistInteractor: CreateSetlistInteractorProtocol {
     
     func createSetlist(setlist: Setlist) {
         print("\(setlist.name) created")
-        presenter?.interactorDidCreateSetlist()
+        mockSetlists.append(setlist)
+        presenter?.interactorDidCreateSetlist(setlist: setlist)
     }
 }

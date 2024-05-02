@@ -7,13 +7,13 @@
 
 import Foundation
 
-let mockSetlists: [Setlist] = [
+var mockSetlists: [Setlist] = [
     Setlist(name: "Setlist 1"),
     Setlist(name: "Setlist 2"),
     Setlist(name: "Setlist 3"),
 ]
 
-let mockSongs: [Song] = [
+var mockSongs: [Song] = [
     Song(name: "Song 1"),
     Song(name: "Song 2"),
     Song(name: "Song 3"),

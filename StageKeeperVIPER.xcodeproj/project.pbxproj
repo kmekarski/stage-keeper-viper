@@ -27,6 +27,8 @@
 		A76238062BE156D800466E34 /* CreateSongPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76238052BE156D800466E34 /* CreateSongPresenter.swift */; };
 		A76238082BE156DC00466E34 /* CreateSongEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76238072BE156DC00466E34 /* CreateSongEntity.swift */; };
 		A762380A2BE156E100466E34 /* CreateSongRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76238092BE156E100466E34 /* CreateSongRouter.swift */; };
+		A780FD1B2BE3B9B100ABE192 /* CreateSongRouterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780FD1A2BE3B9B100ABE192 /* CreateSongRouterDelegate.swift */; };
+		A780FD1D2BE3BC2400ABE192 /* CreateSetlistRouterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A780FD1C2BE3BC2400ABE192 /* CreateSetlistRouterDelegate.swift */; };
 		A7E5700D2BE0315B00B38A83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E5700C2BE0315B00B38A83 /* AppDelegate.swift */; };
 		A7E5700F2BE0315B00B38A83 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E5700E2BE0315B00B38A83 /* SceneDelegate.swift */; };
 		A7E570162BE0315F00B38A83 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7E570152BE0315F00B38A83 /* Assets.xcassets */; };
@@ -60,6 +62,8 @@
 		A76238052BE156D800466E34 /* CreateSongPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSongPresenter.swift; sourceTree = "<group>"; };
 		A76238072BE156DC00466E34 /* CreateSongEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSongEntity.swift; sourceTree = "<group>"; };
 		A76238092BE156E100466E34 /* CreateSongRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSongRouter.swift; sourceTree = "<group>"; };
+		A780FD1A2BE3B9B100ABE192 /* CreateSongRouterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSongRouterDelegate.swift; sourceTree = "<group>"; };
+		A780FD1C2BE3BC2400ABE192 /* CreateSetlistRouterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSetlistRouterDelegate.swift; sourceTree = "<group>"; };
 		A7E570092BE0315B00B38A83 /* StageKeeperVIPER.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StageKeeperVIPER.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7E5700C2BE0315B00B38A83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A7E5700E2BE0315B00B38A83 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -93,6 +97,7 @@
 				A76237FB2BE156B700466E34 /* CreateSetlistPresenter.swift */,
 				A76237FD2BE156BD00466E34 /* CreateSetlistEntity.swift */,
 				A76237FF2BE156C100466E34 /* CreateSetlistRouter.swift */,
+				A780FD1C2BE3BC2400ABE192 /* CreateSetlistRouterDelegate.swift */,
 			);
 			path = CreateSetlist;
 			sourceTree = "<group>";
@@ -105,6 +110,7 @@
 				A76238052BE156D800466E34 /* CreateSongPresenter.swift */,
 				A76238072BE156DC00466E34 /* CreateSongEntity.swift */,
 				A76238092BE156E100466E34 /* CreateSongRouter.swift */,
+				A780FD1A2BE3B9B100ABE192 /* CreateSongRouterDelegate.swift */,
 			);
 			path = CreateSong;
 			sourceTree = "<group>";
@@ -264,12 +270,14 @@
 				A7E570252BE0324B00B38A83 /* HomeView.swift in Sources */,
 				A76237EA2BE11C5D00466E34 /* SetlistDetailsRouter.swift in Sources */,
 				A7E570292BE0325F00B38A83 /* HomePresenter.swift in Sources */,
+				A780FD1B2BE3B9B100ABE192 /* CreateSongRouterDelegate.swift in Sources */,
 				A7E570272BE0325900B38A83 /* HomeInteractor.swift in Sources */,
 				A7E5700D2BE0315B00B38A83 /* AppDelegate.swift in Sources */,
 				A76238002BE156C100466E34 /* CreateSetlistRouter.swift in Sources */,
 				A7E5702F2BE0350300B38A83 /* MockData.swift in Sources */,
 				A76237E42BE11C4D00466E34 /* SetlistDetailsInteractor.swift in Sources */,
 				A76237FC2BE156B700466E34 /* CreateSetlistPresenter.swift in Sources */,
+				A780FD1D2BE3BC2400ABE192 /* CreateSetlistRouterDelegate.swift in Sources */,
 				A76237F42BE14FE300466E34 /* SongDetailsRouter.swift in Sources */,
 				A76237FA2BE156B200466E34 /* CreateSetlistInteractor.swift in Sources */,
 				A76237F82BE156AC00466E34 /* CreateSetlistView.swift in Sources */,
