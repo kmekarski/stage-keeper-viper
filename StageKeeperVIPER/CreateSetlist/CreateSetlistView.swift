@@ -50,7 +50,7 @@ class CreateSetlistViewController: UIViewController, CreateSetlistViewProtocol {
     private lazy var nextButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(nextButtonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
         button.setTitle("Next", for: .normal)
         button.backgroundColor = .blue
         return button
@@ -59,7 +59,7 @@ class CreateSetlistViewController: UIViewController, CreateSetlistViewProtocol {
     private lazy var editSongsButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(editSongsButtonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(editSongsButtonTapped), for: .touchUpInside)
         button.setTitle("Edit", for: .normal)
         button.backgroundColor = .blue
         return button
@@ -68,7 +68,7 @@ class CreateSetlistViewController: UIViewController, CreateSetlistViewProtocol {
     private lazy var addSongsButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(addSongsButtonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(addSongsButtonTapped), for: .touchUpInside)
         button.setTitle("Add", for: .normal)
         button.backgroundColor = .blue
         return button
@@ -77,7 +77,7 @@ class CreateSetlistViewController: UIViewController, CreateSetlistViewProtocol {
     private lazy var createButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(createSetlistButtonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(createSetlistButtonTapped), for: .touchUpInside)
         button.setTitle("Create", for: .normal)
         button.backgroundColor = .blue
         return button
@@ -214,22 +214,22 @@ private extension CreateSetlistViewController {
     }
     
     @objc
-    func nextButtonPressed() {
+    func nextButtonTapped() {
         presenter?.goToNextScreen(currentScreen: screen)
     }
     
     @objc
-    func editSongsButtonPressed() {
+    func editSongsButtonTapped() {
         presenter?.goToEditSongsScreen()
     }
     
     @objc
-    func addSongsButtonPressed() {
+    func addSongsButtonTapped() {
         presenter?.goToAddSongsScreen()
     }
     
     @objc
-    func createSetlistButtonPressed() {
+    func createSetlistButtonTapped() {
         presenter?.createSetlist()
     }
 }

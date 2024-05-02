@@ -48,7 +48,7 @@ class CreateSongViewController: UIViewController, CreateSongViewProtocol {
     private lazy var nextButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(nextButtonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
         button.setTitle("Next", for: .normal)
         button.backgroundColor = .blue
         return button
@@ -57,7 +57,7 @@ class CreateSongViewController: UIViewController, CreateSongViewProtocol {
     private lazy var createButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(createSongButtonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(createSongButtonTapped), for: .touchUpInside)
         button.setTitle("Create", for: .normal)
         button.backgroundColor = .blue
         button.isHidden = true
@@ -158,12 +158,12 @@ private extension CreateSongViewController {
     }
     
     @objc
-    func nextButtonPressed() {
+    func nextButtonTapped() {
         presenter?.goToMainScreen()
     }
     
     @objc
-    func createSongButtonPressed() {
+    func createSongButtonTapped() {
         presenter?.createSong()
     }
 }

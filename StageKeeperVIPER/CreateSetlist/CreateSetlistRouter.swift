@@ -10,7 +10,7 @@ import Foundation
 protocol CreateSetlistRouterProtocol {
     var entry: CreateSetlistViewController? { get }
     var delegate: CreateSetlistRouterDelegate? { get set }
-    static func createCreateSetlist(screen: CreateSetlistScreen?) -> CreateSetlistRouterProtocol
+    static func createCreateSetlist(screen: CreateSetlistScreen) -> CreateSetlistRouterProtocol
     func navigateBack()
     func navigate(to screen: CreateSetlistScreen, setlist: Setlist?)
     func notifyDelegateAboutCreatingSetlist(setlist: Setlist)
@@ -21,7 +21,7 @@ class CreateSetlistRouter: CreateSetlistRouterProtocol {
     var entry: CreateSetlistViewController?
     var delegate: CreateSetlistRouterDelegate?
 
-    static func createCreateSetlist(screen: CreateSetlistScreen? = nil) -> any CreateSetlistRouterProtocol {
+    static func createCreateSetlist(screen: CreateSetlistScreen = .setNameAndDescription) -> any CreateSetlistRouterProtocol {
         let router = CreateSetlistRouter()
         
         let view = CreateSetlistViewController(screen: screen)

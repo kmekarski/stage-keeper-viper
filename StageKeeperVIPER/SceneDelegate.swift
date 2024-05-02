@@ -18,6 +18,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let homeRouter = HomeRouter.start()
         let homeVC = homeRouter.entry!
         
+        let authRouter = AuthRouter.start()
+        let authVC = authRouter.entry!
+        
         let navigation = UINavigationController()
         navigation.viewControllers = [homeVC]
         
