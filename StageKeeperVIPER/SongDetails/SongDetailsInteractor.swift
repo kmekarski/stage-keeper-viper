@@ -12,9 +12,11 @@ protocol SongDetailsInteractorProtocol {
     var song: Song? { get set }
     
     func getSongData()
+    func deleteSong()
 }
 
 class SongDetailsInteractor: SongDetailsInteractorProtocol {
+    
     var presenter: SongDetailsPresenterProtocol?
 
     var song: Song?
@@ -25,5 +27,14 @@ class SongDetailsInteractor: SongDetailsInteractorProtocol {
         } else {
             presenter?.interactorDidUpdateData(result: .failure(SongError.unableToGetSongDetails))
         }
+    }
+    
+    func deleteSong() {
+        guard let song = song else { return }
+        print("deleting \(song.name)")
+        mockSongs.removeAll { el in
+            el.name == song.name
+        }
+        presenter?.interactorDidDeleteSong(song: song)
     }
 }

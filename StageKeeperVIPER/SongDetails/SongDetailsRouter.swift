@@ -9,11 +9,17 @@ import Foundation
 
 protocol SongDetailsRouterProtocol {
     var entry: SongDetailsViewController? { get }
+    var delegate: SongDetailsRouterDelegate? { get set }
     static func createSongDetails(with song: Song) -> SongDetailsRouterProtocol
+    
+    func navigateBack()
+    func notifyDelegateAboutDeletingSong(song: Song)
 }
 
 class SongDetailsRouter: SongDetailsRouterProtocol {
+    
     var entry: SongDetailsViewController?
+    var delegate: SongDetailsRouterDelegate?
 
     static func createSongDetails(with song: Song) -> any SongDetailsRouterProtocol {
         let router = SongDetailsRouter()
@@ -32,5 +38,14 @@ class SongDetailsRouter: SongDetailsRouterProtocol {
         
         router.entry = view
         return router
+    }
+    
+    func navigateBack() {
+        guard let viewController = self.entry else { return }
+        viewController.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    func notifyDelegateAboutDeletingSong(song: Song) {
+        delegate?.didDeleteSong(song: song)
     }
 }

@@ -31,6 +31,15 @@ class SetlistDetailsViewController: UIViewController, SetlistDetailsViewProtocol
         return label
     }()
     
+    private lazy var deleteButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(deleteSetlist), for: .touchUpInside)
+        button.setTitle("Delete", for: .normal)
+        button.backgroundColor = .blue
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter?.viewDidLoad()
@@ -48,16 +57,31 @@ class SetlistDetailsViewController: UIViewController, SetlistDetailsViewProtocol
 }
 
 private extension SetlistDetailsViewController {
+    var padding: CGFloat {
+        return 24
+    }
+    
     func configureUI() {
         view.addSubview(nameLabel)
         view.addSubview(errorLabel)
+        view.addSubview(deleteButton)
         
         NSLayoutConstraint.activate([
+            nameLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
             nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
             errorLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             errorLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            deleteButton.topAnchor.constraint(equalTo: nameLabel.topAnchor, constant: 48),
+            deleteButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
+            deleteButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
+            deleteButton.heightAnchor.constraint(equalToConstant: 48)
         ])
+    }
+    
+    @objc
+    func deleteSetlist() {
+        presenter?.deleteSetlist()
     }
 }

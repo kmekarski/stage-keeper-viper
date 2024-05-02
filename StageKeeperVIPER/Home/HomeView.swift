@@ -20,12 +20,13 @@ protocol HomeViewProtocol {
     func updateSongs(with songs: [Song])
     func didCreateSetlist(setlist: Setlist)
     func didCreateSong(song: Song)
+    func didDeleteSetlist(setlist: Setlist)
+    func didDeleteSong(song: Song)
     func updateSetlistsError(with errorMessage: String)
     func updateSongsError(with errorMessage: String)
 }
 
 class HomeViewController: UIViewController, HomeViewProtocol {
-    
     var presenter: HomePresenterProtocol?
     
     var setlists: [Setlist] = []
@@ -108,13 +109,26 @@ class HomeViewController: UIViewController, HomeViewProtocol {
         songsTable.reloadData()
     }
     
+    func didDeleteSetlist(setlist: Setlist) {
+        setlists.removeAll { el in
+            el.name == setlist.name
+        }
+        setlistsTable.reloadData()
+    }
+    
+    func didDeleteSong(song: Song) {
+        songs.removeAll { el in
+            el.name == song.name
+        }
+        songsTable.reloadData()
+    }
+    
     func updateSetlistsError(with errorMessage: String) {
         DispatchQueue.main.async {
             self.setlists = []
             self.setlistsTable.isHidden = true
             self.errorLabel.text = errorMessage
             self.errorLabel.isHidden = false
-
         }
     }
     
@@ -124,7 +138,6 @@ class HomeViewController: UIViewController, HomeViewProtocol {
             self.songsTable.isHidden = true
             self.errorLabel.text = errorMessage
             self.errorLabel.isHidden = false
-
         }
     }
 }
@@ -225,5 +238,9 @@ private extension HomeViewController {
 }
 
 #Preview {
-    HomeViewController()
+    let homeRouter = HomeRouter.start()
+    let homeVC = homeRouter.entry!
+    let navigation = UINavigationController()
+    navigation.viewControllers = [homeVC]
+    return navigation
 }

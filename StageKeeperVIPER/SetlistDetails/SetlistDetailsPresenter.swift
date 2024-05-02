@@ -13,11 +13,13 @@ protocol SetlistDetailsPresenterProtocol {
     var router: SetlistDetailsRouterProtocol? { get set }
     
     func interactorDidUpdateData(result: Result<Setlist, Error>)
+    func interactorDidDeleteSetlist(setlist: Setlist)
     func viewDidLoad()
+    func deleteSetlist()
 }
 
 class SetlistDetailsPresenter: SetlistDetailsPresenterProtocol {
-    
+
     var view: SetlistDetailsViewProtocol?
     
     var interactor: SetlistDetailsInteractorProtocol?
@@ -35,6 +37,15 @@ class SetlistDetailsPresenter: SetlistDetailsPresenterProtocol {
         case .failure(_):
             view?.updateSetlistError(with: "Something went wrong")
         }
+    }
+    
+    func deleteSetlist() {
+        interactor?.deleteSetlist()
+    }
+    
+    func interactorDidDeleteSetlist(setlist: Setlist) {
+        router?.notifyDelegateAboutDeletingSetlist(setlist: setlist)
+        router?.navigateBack()
     }
     
 }

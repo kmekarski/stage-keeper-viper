@@ -39,14 +39,16 @@ class HomeRouter: HomeRouterProtocol {
     }
     
     func goToSetlistDetail(_ setlist: Setlist) {
-        let setlistDetailsRouter = SetlistDetailsRouter.createSetlistDetails(with: setlist)
+        var setlistDetailsRouter = SetlistDetailsRouter.createSetlistDetails(with: setlist)
+        setlistDetailsRouter.delegate = self
         guard let setlistDetailsView = setlistDetailsRouter.entry,
               let viewController = self.entry else { return }
         viewController.navigationController?.pushViewController(setlistDetailsView, animated: true)
     }
     
     func goToSongDetail(_ song: Song) {
-        let songDetailsRouter = SongDetailsRouter.createSongDetails(with: song)
+        var songDetailsRouter = SongDetailsRouter.createSongDetails(with: song)
+        songDetailsRouter.delegate = self
         guard let songDetailsView = songDetailsRouter.entry,
               let viewController = self.entry else { return }
         viewController.navigationController?.pushViewController(songDetailsView, animated: true)
@@ -78,5 +80,17 @@ extension HomeRouter: CreateSetlistRouterDelegate {
 extension HomeRouter: CreateSongRouterDelegate {
     func didCreateSong(song: Song) {
         entry?.didCreateSong(song: song)
+    }
+}
+
+extension HomeRouter: SongDetailsRouterDelegate {
+    func didDeleteSong(song: Song) {
+        entry?.didDeleteSong(song: song)
+    }
+}
+
+extension HomeRouter: SetlistDetailsRouterDelegate {
+    func didDeleteSetlist(setlist: Setlist) {
+        entry?.didDeleteSetlist(setlist: setlist)
     }
 }

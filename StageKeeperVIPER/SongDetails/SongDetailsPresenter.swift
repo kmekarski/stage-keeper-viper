@@ -13,7 +13,9 @@ protocol SongDetailsPresenterProtocol {
     var router: SongDetailsRouterProtocol? { get set }
     
     func interactorDidUpdateData(result: Result<Song, Error>)
+    func interactorDidDeleteSong(song: Song)
     func viewDidLoad()
+    func deleteSong()
 }
 
 class SongDetailsPresenter: SongDetailsPresenterProtocol {
@@ -37,4 +39,12 @@ class SongDetailsPresenter: SongDetailsPresenterProtocol {
         }
     }
     
+    func deleteSong() {
+        interactor?.deleteSong()
+    }
+    
+    func interactorDidDeleteSong(song: Song) {
+        router?.notifyDelegateAboutDeletingSong(song: song)
+        router?.navigateBack()
+    }
 }

@@ -236,8 +236,8 @@ private extension CreateSetlistViewController {
 
 #Preview {
     let createSetlistRouter = CreateSetlistRouter.createCreateSetlist(screen: .setNameAndDescription)
-    let createSetlistView = createSetlistRouter.entry!
+    let createSetlistVC = createSetlistRouter.entry!
     let navigation = UINavigationController()
-    navigation.viewControllers = [createSetlistView]
+    navigation.viewControllers = [createSetlistVC]
     return navigation
 }

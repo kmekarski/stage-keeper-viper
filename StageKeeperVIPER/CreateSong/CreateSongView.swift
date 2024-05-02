@@ -170,8 +170,8 @@ private extension CreateSongViewController {
 
 #Preview {
     let createSongRouter = CreateSongRouter.createCreateSong(screen: .setNameAndInstruments)
-    let createSongView = createSongRouter.entry!
+    let createSongVC = createSongRouter.entry!
     let navigation = UINavigationController()
-    navigation.viewControllers = [createSongView]
+    navigation.viewControllers = [createSongVC]
     return navigation
 }

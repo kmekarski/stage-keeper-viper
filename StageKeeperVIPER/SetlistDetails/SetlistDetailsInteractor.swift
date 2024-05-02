@@ -12,6 +12,7 @@ protocol SetlistDetailsInteractorProtocol {
     var setlist: Setlist? { get set }
     
     func getSetlistData()
+    func deleteSetlist()
 }
 
 class SetlistDetailsInteractor: SetlistDetailsInteractorProtocol {
@@ -25,5 +26,14 @@ class SetlistDetailsInteractor: SetlistDetailsInteractorProtocol {
         } else {
             presenter?.interactorDidUpdateData(result: .failure(SetlistError.unableToGetSetlistDetails))
         }
+    }
+    
+    func deleteSetlist() {
+        guard let setlist = setlist else { return }
+        print("deleting \(setlist.name)")
+        mockSetlists.removeAll { el in
+            el.name == setlist.name
+        }
+        presenter?.interactorDidDeleteSetlist(setlist: setlist)
     }
 }
