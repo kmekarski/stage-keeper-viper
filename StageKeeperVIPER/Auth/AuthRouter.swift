@@ -11,6 +11,7 @@ protocol AuthRouterProtocol {
     var entry: AuthViewController? { get set }
     static func start(screen: AuthScreenType) -> AuthRouterProtocol
     func navigate(to screen: AuthScreenType)
+    func navigateToHome()
 
 }
 
@@ -40,5 +41,12 @@ class AuthRouter: AuthRouterProtocol {
         let authRouter = AuthRouter.start(screen: screen)
         let destinationVC = authRouter.entry!
         viewController.navigationController?.setViewControllers([destinationVC], animated: true)
+    }
+    
+    func navigateToHome() {
+        var homeRouter = HomeRouter.start()
+        guard let homeVC = homeRouter.entry,
+              let viewController = self.entry else { return }
+        viewController.navigationController?.setViewControllers([homeVC], animated: true)
     }
 }

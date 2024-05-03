@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let authVC = authRouter.entry!
         
         let navigation = UINavigationController()
-        navigation.viewControllers = [homeVC]
+        navigation.viewControllers = [authVC]
         
         let window = UIWindow(windowScene: windowScene)
         window.makeKeyAndVisible()

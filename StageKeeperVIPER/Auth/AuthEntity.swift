@@ -20,3 +20,14 @@ struct SignInAuthData {
     let email: String
     let password: String
 }
+
+enum AuthError: Error {
+    case unableToSignOut
+    case unableToSignUp
+    case unableToSignIn
+    case invalidUsername
+    case invalidEmail
+    case invalidPassword
+    case passwordsAreNotTheSame
+    case wrongCredentials
+}

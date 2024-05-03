@@ -18,7 +18,7 @@ protocol AuthViewProtocol {
     func getCurrentScreen() -> AuthScreenType
     func getSignInAuthData() -> SignInAuthData?
     func getSignUpAuthData() -> SignUpAuthData?
-    func displaySignUpError(_ error: SignUpDataError)
+    func displayError(_ error: AuthError)
 }
 
 class AuthViewController: UIViewController, AuthViewProtocol {
@@ -108,7 +108,7 @@ class AuthViewController: UIViewController, AuthViewProtocol {
         return SignUpAuthData(username: username, email: email, password: password, repeatedPassword: repeatedPassword)
     }
     
-    func displaySignUpError(_ error: SignUpDataError) {
+    func displayError(_ error: AuthError) {
         switch error {
         case .invalidUsername:
             print("invalid username")
@@ -118,6 +118,12 @@ class AuthViewController: UIViewController, AuthViewProtocol {
             print("invalid password")
         case .passwordsAreNotTheSame:
             print("passwords must be equal")
+        case .wrongCredentials:
+            print("wrong credentials")
+        case .unableToSignUp:
+            print("unable to sign up")
+        default:
+            break
         }
     }
     

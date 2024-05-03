@@ -15,6 +15,7 @@ protocol HomeRouterProtocol {
     func goToSongDetail(_ song: Song)
     func goToCreateSetlist()
     func goToCreateSong()
+    func navigateToAuth()
 }
 
 class HomeRouter: HomeRouterProtocol {
@@ -68,6 +69,15 @@ class HomeRouter: HomeRouterProtocol {
               let viewController = self.entry else { return }
         viewController.navigationController?.pushViewController(createSongView, animated: true)
     }
+    
+    func navigateToAuth() {
+        let authRouter = AuthRouter.start()
+        guard let authVC = authRouter.entry,
+              let viewController = self.entry else { return }
+        viewController.navigationController?.setViewControllers([authVC], animated: true)
+    }
+    
+    
 }
 
 extension HomeRouter: CreateSetlistRouterDelegate {

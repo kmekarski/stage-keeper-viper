@@ -22,11 +22,13 @@ protocol HomeViewProtocol {
     func didCreateSong(song: Song)
     func didDeleteSetlist(setlist: Setlist)
     func didDeleteSong(song: Song)
-    func updateSetlistsError(with errorMessage: String)
-    func updateSongsError(with errorMessage: String)
+    func updateSetlistsError()
+    func updateSongsError()
+    func displaySignOutError()
 }
 
 class HomeViewController: UIViewController, HomeViewProtocol {
+    
     var presenter: HomePresenterProtocol?
     
     var setlists: [Setlist] = []
@@ -69,8 +71,17 @@ class HomeViewController: UIViewController, HomeViewProtocol {
     private lazy var createButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(goToCreate), for: .touchUpInside)
+        button.addTarget(self, action: #selector(createButtonTapped), for: .touchUpInside)
         button.setTitle("Create", for: .normal)
+        button.backgroundColor = .blue
+        return button
+    }()
+    
+    private lazy var signOutButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(signOutButtonTapped), for: .touchUpInside)
+        button.setTitle("Sign out", for: .normal)
         button.backgroundColor = .blue
         return button
     }()
@@ -123,22 +134,26 @@ class HomeViewController: UIViewController, HomeViewProtocol {
         songsTable.reloadData()
     }
     
-    func updateSetlistsError(with errorMessage: String) {
+    func updateSetlistsError() {
         DispatchQueue.main.async {
             self.setlists = []
             self.setlistsTable.isHidden = true
-            self.errorLabel.text = errorMessage
+            self.errorLabel.text = "Unable to fetch setlists"
             self.errorLabel.isHidden = false
         }
     }
     
-    func updateSongsError(with errorMessage: String) {
+    func updateSongsError() {
         DispatchQueue.main.async {
             self.songs = []
             self.songsTable.isHidden = true
-            self.errorLabel.text = errorMessage
+            self.errorLabel.text = "Unable to fetch songs"
             self.errorLabel.isHidden = false
         }
+    }
+    
+    func displaySignOutError() {
+        print("Unable to sign out")
     }
 }
 
@@ -186,6 +201,7 @@ private extension HomeViewController {
         view.addSubview(errorLabel)
         view.addSubview(switchButton)
         view.addSubview(createButton)
+        view.addSubview(signOutButton)
                 
         NSLayoutConstraint.activate([
             setlistsTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
@@ -201,14 +217,19 @@ private extension HomeViewController {
             errorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             errorLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
+            signOutButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
+            signOutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
+            signOutButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding),
+            signOutButton.heightAnchor.constraint(equalToConstant: 48),
+            
             switchButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
             switchButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-            switchButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding),
+            switchButton.bottomAnchor.constraint(equalTo: signOutButton.topAnchor, constant: -24),
             switchButton.heightAnchor.constraint(equalToConstant: 48),
             
             createButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
             createButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
-            createButton.bottomAnchor.constraint(equalTo: switchButton.topAnchor, constant: -48),
+            createButton.bottomAnchor.constraint(equalTo: switchButton.topAnchor, constant: -24),
             createButton.heightAnchor.constraint(equalToConstant: 48),
         ])
     }
@@ -227,13 +248,18 @@ private extension HomeViewController {
     }
     
     @objc
-    func goToCreate() {
+    func createButtonTapped() {
         switch activeTable {
         case .songs:
             presenter?.createSongTapped()
         case .setlists:
             presenter?.createSetlistTapped()
         }
+    }
+    
+    @objc
+    func signOutButtonTapped() {
+        presenter?.signOut()
     }
 }
 

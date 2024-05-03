@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum NetworkError: Error {
+    case unableToFetchSetlists
+    case unableToFetchSongs
+}
+
 struct Setlist {
     let name: String
 }

@@ -6,30 +6,38 @@
 //
 
 import Foundation
-
-enum NetworkError: Error {
-    case unableToFetchSetlists
-    case unableToFetchSongs
-}
+import FirebaseAuth
 
 protocol HomeInteractorProtocol {
     var presenter: HomePresenterProtocol? { get set }
 
     func fetchSetlists()
     func fetchSongs()
+    
+    func signOut()
 }
 
 class HomeInteractor: HomeInteractorProtocol {
     var presenter: HomePresenterProtocol?
+    let auth = Auth.auth()
     
     func fetchSetlists() {
-        presenter?.interactorDidFetchSetlists(with: .success(mockSetlists))
+        presenter?.didFetchSetlists(with: .success(mockSetlists))
 //        presenter?.interactorDidFetchSetlists(with: .failure(NetworkError.unableToFetchSetlists))
     }
     
     func fetchSongs() {
-        presenter?.interactorDidFetchSongs(with: .success(mockSongs))
+        presenter?.didFetchSongs(with: .success(mockSongs))
 //        presenter?.interactorDidFetchSongs(with: .failure(NetworkError.unableToFetchSongs))
+    }
+    
+    func signOut() {
+        do {
+            try auth.signOut()
+            presenter?.didSignOut(result: .success(()))
+        } catch {
+            presenter?.didSignOut(result: .failure(.unableToSignOut))
+        }
     }
     
 }

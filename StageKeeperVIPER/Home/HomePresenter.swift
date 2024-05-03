@@ -13,12 +13,14 @@ protocol HomePresenterProtocol {
     var router: HomeRouterProtocol? { get set }
 
     func viewDidLoad()
-    func interactorDidFetchSetlists(with result: Result<[Setlist], Error>)
-    func interactorDidFetchSongs(with result: Result<[Song], Error>)
+    func didFetchSetlists(with result: Result<[Setlist], Error>)
+    func didFetchSongs(with result: Result<[Song], Error>)
     func setlistTapped(setlist: Setlist)
     func songTapped(song: Song)
     func createSetlistTapped()
     func createSongTapped()
+    func signOut()
+    func didSignOut(result: Result<Void, AuthError>)
 }
 
 class HomePresenter: HomePresenterProtocol {
@@ -34,21 +36,21 @@ class HomePresenter: HomePresenterProtocol {
         interactor?.fetchSongs()
     }
     
-    func interactorDidFetchSetlists(with result: Result<[Setlist], any Error>) {
+    func didFetchSetlists(with result: Result<[Setlist], any Error>) {
         switch result {
         case .success(let setlists):
             view?.updateSetlists(with: setlists)
         case .failure(_):
-            view?.updateSetlistsError(with: "Something went wrong")
+            view?.updateSetlistsError()
         }
     }
     
-    func interactorDidFetchSongs(with result: Result<[Song], any Error>) {
+    func didFetchSongs(with result: Result<[Song], any Error>) {
         switch result {
         case .success(let songs):
             view?.updateSongs(with: songs)
         case .failure(_):
-            view?.updateSongsError(with: "Something went wrong")
+            view?.updateSongsError()
         }
     }
     
@@ -66,5 +68,18 @@ class HomePresenter: HomePresenterProtocol {
     
     func createSongTapped() {
         router?.goToCreateSong()
+    }
+    
+    func signOut() {
+        interactor?.signOut()
+    }
+    
+    func didSignOut(result: Result<Void, AuthError>) {
+        switch result {
+        case .success(_):
+            router?.navigateToAuth()
+        case .failure(let error):
+            view?.displaySignOutError()
+        }
     }
 }

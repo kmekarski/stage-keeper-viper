@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 protocol AuthPresenterProtocol {
     var view: AuthViewProtocol? { get set }
@@ -15,6 +16,7 @@ protocol AuthPresenterProtocol {
     func viewDidLoad()
     func switchScreens()
     func authenticate()
+    func didAuthenticate(result: Result<User, AuthError>)
 }
 
 class AuthPresenter: AuthPresenterProtocol {
@@ -22,8 +24,9 @@ class AuthPresenter: AuthPresenterProtocol {
     var interactor: AuthInteractorProtocol?
     var router: AuthRouterProtocol?
     
+    
     func viewDidLoad() {
-        
+        interactor?.checkAuthentication()
     }
     
     func switchScreens() {
@@ -39,29 +42,39 @@ class AuthPresenter: AuthPresenterProtocol {
         guard let currentScreen = view?.getCurrentScreen() else { return }
         switch currentScreen {
         case .signIn:
-            guard let signInData = view?.getSignInAuthData() else { return }
+            guard let signInData = view?.getSignInAuthData() else {
+                view?.displayError(.unableToSignIn)
+                return
+            }
             interactor?.signIn(data: signInData)
         case .signUp:
-            guard let signUpData = view?.getSignUpAuthData() else { return }
+            guard let signUpData = view?.getSignUpAuthData() else {
+                view?.displayError(.unableToSignUp)
+                return
+            }
             switch validateSignUpData(signUpData) {
             case .success():
                 interactor?.signUp(data: signUpData)
             case .failure(let error):
-                view?.displaySignUpError(error)
+                view?.displayError(error)
             }
+        }
+    }
+    
+    func didAuthenticate(result: Result<User, AuthError>) {
+        switch result {
+        case .success(_):
+            router?.navigateToHome()
+        case .failure(let authError):
+            view?.displayError(authError)
         }
     }
 }
 
-enum SignUpDataError: Error {
-    case invalidUsername
-    case invalidEmail
-    case invalidPassword
-    case passwordsAreNotTheSame
-}
+
 
 private extension AuthPresenter {
-    func validateSignUpData(_ data: SignUpAuthData) -> Result<Void, SignUpDataError> {
+    func validateSignUpData(_ data: SignUpAuthData) -> Result<Void, AuthError> {
         if data.email == "" {
             return .failure(.invalidEmail)
         }
